@@ -1,0 +1,160 @@
+                                                                        Britain Southwick
+                                                                        CMSI 488
+                                                                        
+                                        Homework 1
+
+1. 
+    One of the primary reasons why pure interpretation is acceptable for recent scripting languages, like PHP and Javascript, is that those languages are intended for use in web apps. The nature of pure interpretation removes the need for the linking and loading done by compiled systems. This means the scripts on the web app do not have to link with the needed files on every computer that accesses the web app. Another reason that also has to do with these languages's use in web pages is that it allows for much faster turn around in correcting bugs that occur. Because languages like Javascript and PHP are typically used to handle the results of user activity or are used to generate visual feedback to users of the web page or app, errors can occur due to the various factors controlled by the user.According to Sebesta, "all run-time error messages can refer to source-level units." Since purely interpreted languages are simply interpreted, not translated, it is much easier for run-time error messages to correctly identify the cause of the issue. This allows programmers to not only quickly correct bugs as they arise through use, it also makes it easier and quicker to identify such bugs before the product is released.
+
+2. 
+    I believe one of the primary reasons why so many more scripting languages are created is the pervasiveness of the internet. The fact that scripting languages tend to be more concise and writable than compiled languages is definitely a contributing factor to why they are more popular in recent years. The internet is a much more open and accessible medium than systems programming, since systems programming tends to require a great deal of technical knowledge. The nature of the internet necessitates the ability to dynamically alter content, which is far easier to do with scripting languages than with compiled languages. Another reason is that it is much easier to experiment with scripting languages, since most have a REPL available and do not need to be compiled before being ran. This tends to make these languages easier to learn and more fun to mess around with and could definitely explain some of their popularity. The lack of a compiler makes it easier for novices to pick up scripting languages since they don't have to deal with the added complexity of compile-time errors. Finally, image could have a lot to do with the success of scripting languages in recent years. To me at least, scripting languages seem more modern and interesting, whereas compiled languages tend to feel older and more restrictive. While this may not always be the case (Java isn't that old), the image that the popularity of languages like Javascript has created could make scripting languages feel more modern.
+
+3. http://codepad.org/jF3yWqC5 (not sure if this needed a digital version).
+    a. [A-CEHJ-NPR-TV-Z]\d[A-CEHJ-NPR-TV-Z]\d[A-CEHJ-NPR-TV-Z]\d
+    b. 4\d{15}
+    c. 5\d{16}
+    d. (\d(\_ | \d)*(\.\d(\_ | \d))?((E(\+)?\d(\_ | \d)*) | (E\-\d(\_ | \d)*))) |
+        (\d(\_ | \d)*\#((\d | [A-F]) \.?)+(\.((\d | [A-F]) \.?)+)?\#(E\-\d(\_ | \d)*))?
+    e. [a-zA-Z] ((\d(a-zA-Z\d)*)* | ([a-zA-Z][a-np-zA-NP-Z\d]? | [oO]) | [a-zA-Z\d]{3})
+
+4.a <assign>
+    <id> = <expr>
+    A = <expr>
+    A = <term> * <factor>
+    A = <factor> * <factor>
+    A = (<expr>) * <factor>
+    A = (<expr> + <term>) * <factor>
+    A = (<term> + <term>) * <factor>
+    A = (<factor> + <term>) * <factor>
+    A = (<id> + <term>) * <factor>
+    A = (A + <term>) * <factor>
+    A = (A + <factor>) * <factor>
+    A = (A + <id>) * <factor>
+    A = (A + B) * <factor>
+    A = (A + B) * <id>
+    A = (A + B) * C
+
+4.b <assign>
+    <id> = <expr>
+    A = <expr>
+    A = <expr> + <term>
+    A = <expr> + <term> + <term>
+    A = <term> + <term> + <term>
+    A = <factor> + <term> + <term>
+    A = <id> + <term> + <term>
+    A = B + <term> + <term>
+    A = B + <factor> + <term>
+    A = B + <id> + <term>
+    A = B + C + <term>
+    A = B + C + <factor>
+    A = B + C + <id>
+    A = B + C + A
+
+4.c <assign>
+    <id> = <expr>
+    A = <expr>
+    A = <term>
+    A = <term> * <factor>
+    A = <factor> * <factor>
+    A = <id> * <factor>
+    A = A * <factor>
+    A = A * ( <expr> )
+    A = A * (<expr> + <term>)
+    A = A * (<term> + <term>)
+    A = A * (<factor> + <term>)
+    A = A * (<id> + <term>)
+    A = A * (B + <term>)
+    A = A * (B + <factor>)
+    A = A * (B + <id>)
+    A = A * (B + C)
+
+4.d <assign>
+    <id> = <expr>
+    A = <expr>
+    A = <term>
+    A = <term> * <factor>
+    A = <factor> * <factor>
+    A = <id> * <factor>
+    A = B * <factor>
+    A = B * ( <expr> )
+    A = B * ( <term> )
+    A = B * ( <term> * <factor> )
+    A = B * ( <factor> * <factor> )
+    A = B * ( <id> * <factor> )
+    A = B * ( C * <factor> )
+    A = B * ( C * ( <expr> ) )
+    A = B * ( C * ( <expr> + <term> ) )
+    A = B * ( C * ( <term> + <term> ) )
+    A = B * ( C * ( <factor> + <term> ) )
+    A = B * ( C * ( <id> + <term> ) )
+    A = B * ( C * ( A + <term> ) )
+    A = B * ( C * ( A + <factor> ) )
+    A = B * ( C * ( A + <id> ) )
+    A = B * ( C * ( A + B ) )
+    
+
+5. 
+    This grammar defines a language for making a series of one or more a's, followed by one or more b's, followed by one or more c's. Some examples of strings generated by this language are "abc", "aaaaaaaaaaaabcccccccc", "aaabbbccc", "abbbbbbbcc", etc.
+
+6.
+  <S> -> <A>
+  <A> -> a<A>b> | ab
+  
+7.
+    S -> A |
+         SbA
+    A -> aA |
+         abA 
+         
+    
+8. http://codepad.org/2SgQXxAn
+    {"program" : {
+        "block" : [
+            "x", "y", ["while" , {
+                "minus" : ["y", 5], "block" : [
+                    "y", {"read" : ["x", "y"]}, ["assign",
+                        {"x" : ["times", 2, ["plus", 3, "y"]]}
+                    ]
+                ]
+            }], ["write", 5]
+        ]
+    }}
+    
+9.
+    The designers likely did this because giving the unary negation highest precedence would have complicated constructing comments and double negation. The most likely reason seems to be that giving the unary negation operator a lower precedence requires programmers to use more parentheses to achieve the same effects that unary negation gives in other languages. Since unary negation is applied at the same time as addition and subtraction, it is basically required to use parentheses in all but very simplistic cases. This acts as a sort of built in safeguard to keep people from accidentally creating a comment when they meant to perform a double negation or a subtraction on a negation.
+
+10. 
+                 Microsyntax
+                 
+    KEYWORD   ->  'fun' | 'if' | 'else'
+    ID        ->  [a-zA-Z\$] [a-zA-Z0-9_@\$] - KEYWORD
+    NUMLIT    ->  [0-9]+ (\.[0-9]+)? ([0-9]+ \^[0-9]+)?
+    ESCAPE    ->  '\'[\'\"rn\\(u[0-9a-fA-F]{4})] 
+    STRINGLIT ->  '"' ([^\p{Cc}\"] | ESCAPE)* '"' 
+    SYMBOL    ->  [,;{}+-*\\!()"^.]
+    SKIP      ->  [\x20 \x09 \x0A \x0D]
+    TOKEN     ->  KEYWORD | ID | NUMLIT | SYMBOL | STRINGLIT
+    
+                Macrosyntax
+                
+    PROGRAM   ->  FUNDEC+ EXP
+    FUNDEC    ->  'fun' ID '(' PARAMS ')' '{' BLOCK '}'
+    PARAMS     ->  (ID (',' ID)*)?
+    BLOCK     ->  (EXP ';')+
+    EXP       ->  EXP1 COND*
+    EXP1      ->  EXP2 (ADDOP EXP2)*
+    EXP2      ->  EXP3 (MULOP EXP3)*
+    EXP3      ->  '-'? EXP4
+    EXP4      ->  '!'? EXP5
+    EXP5      ->  NUMLIT 
+                  | STRINGLIT
+                  | ID
+                  | CALL
+                  | '(' EXP ')'
+    ADDOP     ->  '+' | '-'
+    MULLOP    ->  '/' | '*'
+    COND      ->  BLOCK 'if' EXP 'else' BLOCK 
+    CALL      ->  ID '(' (EXP (',' EXP)*)? ')'
+    
+
+           

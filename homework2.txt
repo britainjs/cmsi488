@@ -1,0 +1,66 @@
+                                                                        Britain Southwick
+                                                                        CMSI 488
+                                        Homework 2
+                                        
+1. http://codepad.org/4CFLXrT6
+    1. Syntax rule: <assign> -> <var> = <expr>
+       Semantic rule: <expr>.expected_type <- <var>.actual_type
+       
+    2. Syntax rule: <expr> -> <var>[2] + <var>[3]
+       Semantic rule: <expr>.actual_type <- <var>[2].actual_type
+       Predicate: <var>[2].actual_type == <var>[3].actual_type
+        
+    3. Syntax rule: <expr> -> <var>
+       Semantic rule: <expr>.actual_type <- <var>.actual_type
+       
+    4. Syntax rule: <var> -> A | B | C
+       Semantic rule: <var>.actual_type <- look-up(<var>.string)
+
+2.
+    a) S -> aSb | bAA
+       FIRST(S1) = {a}, FIRST(S2) = {b}.
+       Since the intersection of FIRST(S1) and FIRST(S2) is empty, this rule passes the
+       test.
+       
+    b) A -> b{aB} | a
+       FIRST(A1) = {b}, FIRST(A2) = {a}.
+       Since the intersection of FIRST(A1) and FIRST(A2) is empty, this rule passes the
+       test.
+    
+    c) B -> aB | a
+       FIRST(B1) = {a}, FIRST(B2) = {a}
+       Since the intersection of FIRST(B1) and FIRST(B2) = {a}, it is not empty and 
+       fails the test.
+
+4.
+    a) This grammar is not LL(1) because it must look at at least 2 terminals before it
+       can make a choice when it encounters an ID. While parsing, if it finds an ID it 
+       can either go into ID ":=" EXP or TERM -> FACTOR -> ID. It must look for the ":="
+       terminal before it knows whether it is going into ID ":=" EXP or TERM TERM_TAIL.
+       Since it must look for this extra terminal, it is at least LL(2).
+    
+    b) EXP      -> 
+       
+    
+6.
+    1. Syntax: POLY -> TERM ('+' | '-') TERM_TAIL
+        
+    2. Syntax: TERM -> COEF VAR EXPONENT | DIGIT
+    
+    3. Syntax: TERM_TAIL -> (POLY)?
+    
+    4. Syntax: COEF -> ('-')? DIGIT DIGIT_REST
+    
+    5. Syntax: DIGIT -> [0-9]
+    
+    6. Syntax: DIGIT_REST -> (DIGIT DIGIT_REST)?
+    
+    7. Syntax: VAR ->  'x'
+    
+    8. Syntax: EXPONENT -> '^' DIGIT DIGIT_REST
+    
+
+
+8. See attached. http://ideone.com/29ftIL
+
+9. See attached. http://ideone.com/CtAhjK

@@ -1,0 +1,76 @@
+require 'polyglot'
+require 'treetop'
+
+grammar EvalPoly
+    rule poly
+         (negTerm / term)  (posTerm / negTerm)*
+        {
+            def resolve (x)
+                result = 0
+                elements.each { |n| result += n.resolve(x)}
+                return result
+            end
+        }
+         
+    end
+    
+    rule term
+          exponent / num ( exponent)? 
+         {
+            def resolve (x)
+                result = 1
+                elements.each { |n| result *= n.resolve(x)}
+                return result
+            end
+         }
+    end
+    
+    rule posTerm
+        '+'  term
+        {
+            def resolve (x)
+                result = 0
+                elements.each {|n| result += n.resolve(x)}
+            end
+        }
+    end
+    
+    rule negTerm
+        '-'  term
+        {
+            def resolve (x)
+                result = 0
+                elements.each {|n| result -= n.resolve(x)}
+            end
+        }
+    end
+    
+    rule var
+        'x'
+        {
+            def resolve (x)
+                x.to_i
+            end
+        }
+    end
+    
+    rule exponent
+        var ( '^' num)?
+        {
+            def resolve (x)
+                var.resolve(x)
+            end
+                    
+        }
+    end
+    
+    rule num
+        [0-9]+
+        {
+            def resolve (x)
+                return text_value.to_f
+            end
+        }
+    end
+    
+end    

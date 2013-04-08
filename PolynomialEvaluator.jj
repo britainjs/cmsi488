@@ -1,0 +1,48 @@
+PARSER_BEGIN(PolynomialEvaluator)
+
+public class PolynomialEvaluator {
+    //Note: Compile with -STATIC=false to use the unit tests.
+    public static void main(String[] args) throws Exception{
+        System.out.println(evaluate(args[0], Double.parseDouble(args[1]))); 
+    }
+    
+    public static double evaluate(String s, double x) throws Exception{
+        double result = 0;
+        try{
+            result = new PolynomialEvaluator(new java.io.StringReader(s)).POLY(x);
+        } catch (Throwable e) {
+            System.out.println("Syntax Error" + e.getMessage());
+        }
+        return result;
+    }
+}
+
+PARSER_END(PolynomialEvaluator)
+
+SKIP:  { " " | "\t" | "\n" | "\r" }
+TOKEN: { "+" | "-" | "^" | <ID: "x" > | <NUM: (["0"-"9"])+> }
+
+double POLY(double x): {double result, tail;} 
+{ 
+    result = TERM(x) ("+" tail = TERM(x) {result += tail;}
+        | "-" tail = TERM(x) {result -= tail;} )* {return result;}
+}
+
+double TERM(double x): {double e = 1, n = 1, sign = 1; Token t;} 
+{ 
+    ("-" {sign = -1;} )? (e = EXPONENT(x) 
+                         | t = <NUM> (e = EXPONENT(x))? 
+                            {n = Integer.parseInt(t.image);}) 
+    {return e * n * sign;}
+}
+
+double VAR(double x): {} 
+{ 
+    <ID> {return x;}
+}
+
+double EXPONENT(double x): {double n, y = 1; Token t;} 
+{ 
+    n = VAR(x) ( "^" t = <NUM> {y = Integer.parseInt(t.image);})? 
+    {return Math.pow(n, y);}
+}
