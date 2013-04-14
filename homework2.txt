@@ -31,6 +31,8 @@
        FIRST(B1) = {a}, FIRST(B2) = {a}
        Since the intersection of FIRST(B1) and FIRST(B2) = {a}, it is not empty and 
        fails the test.
+       
+3. See attached.
 
 4.
     a) This grammar is not LL(1) because it must look at at least 2 terminals before it
@@ -39,27 +41,62 @@
        terminal before it knows whether it is going into ID ":=" EXP or TERM TERM_TAIL.
        Since it must look for this extra terminal, it is at least LL(2).
     
-    b) EXP      -> 
+    b) EXP  -> ID ID_TAIL | TERM TERM_TAIL
+       ID_TAIL -> ":=" EXP | FACTOR_TAIL TERM_TAIL
+       TERM_TAIL -> ("+" TERM TERM_TAIL)?
+       TERM -> FACTOR FACTOR_TAIL
+       FACTOR_TAIL -> ("*" FACTOR FACTOR_TAIL)?
+       FACTOR -> "(" EXP ")"
+
+5. 
+    1. Sytnax: EXP  -> ID ID_TAIL | TERM TERM_TAIL
+       Semantics: EXP.type <- ID.type || TERM.type
+                  ID.type <- image(ID) || ID_TAIL.type
+       Predicate: ID.type == ID_TAIL.type
+                  (TERM.type == TERM_TAIL.type) || (TERM_TAIL.type == null)
+                  ID.type == (int | real)
+                  
+    2. Syntax: ID_TAIL -> ":=" EXP | FACTOR_TAIL TERM_TAIL
+       Semantics: ID_TAIL.type <- EXP.type || FACTOR_TAIL.type || TERM_TAIL.type
+       Predicate: (FACTOR_TAIL.type == TERM_TAIL.type) || (TERM_TAIL.type == null)
+                  || (FACTOR_TAIL.type == null)
+       
+    3. Syntax: TERM_TAIL[1] -> ("+" TERM TERM_TAIL[2])?
+       Semantics: TERM_TAIL[1].type <- TERM.type || null
+       Predicate: (TERM.type == TERM_TAIL[2].type) || (TERM_TAIL[2].type == null)
+       
+    4. Syntax: TERM -> FACTOR FACTOR_TAIL
+       Semantics: TERM.type <- FACTOR.type
+       Predicate: (FACTOR.type == FACTOR_TAIL.type) || (FACTOR_TAIL.type == null)
+       
+    5. Syntax: FACTOR_TAIL[1] -> ("*" FACTOR FACTOR_TAIL[2])?
+       Semantics: FACTOR_TAIL[1].type <- FACTOR.type || null
+       Predicate: (FACTOR.type == FACTOR_TAIL[2].type) || (FACTOR_TAIL[2].type == null)
+       
+    6. Syntax: FACTOR -> "(" EXP ")"
+       Semantics: FACTOR.type <- EXP.type
        
     
 6.
-    1. Syntax: POLY -> TERM ('+' | '-') TERM_TAIL
+    1.  POLY -> TERM {POLY.value = TERM.value}
+                       ('+' TERM {POLY.value = POLY.value + TERM.value} |
+                        '-' TERM {Poly.value = POLY.value - TERM.value})*
         
-    2. Syntax: TERM -> COEF VAR EXPONENT | DIGIT
+    2.  TERM -> '-' EXPONENT {Term.value = -EXPONENT.value}
+                       | EXPONENT {Term.value = EXPONENT.value}
+                       | NUM {TERM.value = NUM.value} 
+                           (EXPONENT {TERM.value = TERM.value * EXPONENT.value)?
     
-    3. Syntax: TERM_TAIL -> (POLY)?
+    3.  EXPONENT -> VAR {EXPONENT.value = VAR.value} 
+                               ('^' NUM {EXPONENT.value = EXPONENT.value ** NUM.value})? 
     
-    4. Syntax: COEF -> ('-')? DIGIT DIGIT_REST
+    4.  VAR -> 'x' {VAR.value = image(x)}
     
-    5. Syntax: DIGIT -> [0-9]
-    
-    6. Syntax: DIGIT_REST -> (DIGIT DIGIT_REST)?
-    
-    7. Syntax: VAR ->  'x'
-    
-    8. Syntax: EXPONENT -> '^' DIGIT DIGIT_REST
-    
+    5.  NUM -> ([0-9])+ {NUM.value = image(NUM)}
 
+7. Not quite working, but close. See attached.
+   http://ideone.com/L2tgWc for treetop grammer.
+   http://ideone.com/HGA6Kr  for ruby parser.
 
 8. See attached. http://ideone.com/29ftIL
 

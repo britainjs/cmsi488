@@ -17,7 +17,8 @@ PARSER_END(SyntaxChecker)
 SKIP:  { " " | "\t" | "\n" | "\r"                    }
 TOKEN: { "(" | ")" | "+" | "*" | ":=" | <ID: (["a"-"z"])+> | <NUM: (["0"-"9"])+> }
 
-void EXP(): {} { <ID>  (":=" EXP())? | TERM() TERM_TAIL() }
+void EXP(): {} { <ID>  ID_TAIL() | TERM() TERM_TAIL() }
+void ID_TAIL(): {} {":=" EXP() | FACTOR_TAIL() TERM_TAIL()}
 void TERM_TAIL(): {} { ("+" TERM() TERM_TAIL())?      }
 void TERM(): {} { FACTOR() FACTOR_TAIL() }
 void FACTOR_TAIL(): {} { ("*" FACTOR() FACTOR_TAIL())? }
